@@ -1,0 +1,11 @@
+version: '2.0'
+services:
+  app:
+    build: .
+    command: [celery, worker, --app=worker.app, --pool=gevent, --concurrency=20, --loglevel=INFO]
+    volumes:
+    - ./app:/app
+    links:
+    - rabbitmq
+  rabbitmq:
+    image: rabbitmq

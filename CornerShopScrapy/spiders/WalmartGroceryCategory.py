@@ -13,8 +13,6 @@ class WalmartGroceryCategorySpider(SeleniumSpiderBase):
     def __init__(self,  *args, **kwargs):
         super(WalmartGroceryCategorySpider, self).__init__(*args, **kwargs)
         self.start_urls =  pickle.load( open( "list.p", "rb" ) )
-        # self.start_urls = ['https://www.walmart.ca/en/grocery/fruits-and-vegetables/N-3799', 'https://www.walmart.ca/en/grocery/dairy-eggs/N-3799']
-        # self.start_urls = ['https://www.walmart.ca/en/grocery/fruits-and-vegetables/N-3799']
         self.links = []
         self.PAGINATE = True
         self.MAX_NUMBER_OF_PRODUCTS_TOTAL = 5000

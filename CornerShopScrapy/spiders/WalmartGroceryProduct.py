@@ -28,7 +28,6 @@ class WalmartGroceryProductSpider(scrapy.Spider):
 
         if object:
             product = object['product']
-
             catchment = object['catchment'] #storeId
             if (int(catchment['storeId']) in self.STORES_IDS):
                 sku = product['activeSkuId']

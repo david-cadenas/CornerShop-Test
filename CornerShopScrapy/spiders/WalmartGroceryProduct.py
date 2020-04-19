@@ -35,9 +35,11 @@ class WalmartGroceryProductSpider(scrapy.Spider):
                 offer = self.get_offer(id, [sku])
                 product = Product(store=catchment['storeId'], barcodes=entities['upc'],
                             sku=sku, brand=entities['brand']['name'],
-                            name=entities['name'], description=entities['longDescription'],
+                            name=product['item']['name']['en'],
+                            description=entities['longDescription'],
                             package=entities['description'],
                             price=offer['currentPrice'],
+                            stock=product['quantity'],
                             image_urls=entities['images'])
                 yield product
 

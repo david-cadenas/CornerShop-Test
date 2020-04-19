@@ -10,10 +10,14 @@ services:
       - selenium
     env_file:
       - ".env"
+    depends_on:
+      - selenium
+
   rabbitmq:
     image: rabbitmq
     ports:
       - "5672:5672"
+      
   selenium:
     image: selenium/standalone-firefox
     ports:

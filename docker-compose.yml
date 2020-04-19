@@ -2,10 +2,19 @@ version: '2.0'
 services:
   app:
     build: .
-    command: [celery, worker, --app=worker.app, --pool=gevent, --concurrency=20, --loglevel=INFO]
+    command: python spiders.py
     volumes:
-    - ./app:/app
+      - .:/app
     links:
-    - rabbitmq
+      - rabbitmq
+      - selenium
+    env_file:
+      - ".env"
   rabbitmq:
     image: rabbitmq
+    ports:
+      - "5672:5672"
+  selenium:
+    image: selenium/standalone-firefox
+    ports:
+      - "4444:4444"

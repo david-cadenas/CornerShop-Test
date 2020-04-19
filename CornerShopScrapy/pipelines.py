@@ -4,6 +4,8 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
+
+import re
 from bs4 import BeautifulSoup
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -22,14 +24,18 @@ class ProductPipeline(object):
     def process_item(self, item, spider):
 
         if item.get('image_urls') and len(list(item.get('image_urls'))) > 0:
-            item['image_urls'] = ','.join([ ','.join([x['large']['url'], x['small']['url']]) for x in item.get('image_urls')] )
+            item['image_urls'] = ','.join([','.join([x['large']['url'], x['small']['url']]) for x in item.get('image_urls')])
 
         if item.get('barcodes') and len(list(item.get('barcodes'))) > 0:
-            item['barcodes'] = ','.join([x for x in item.get('barcodes')])
+            item['barcodes'] = self.arrayToString(item.get('barcodes'))
 
-        item['description'] = self.removeHTML(item['description']).strip()
+        if item.get('categories') and len(list(item.get('categories'))) > 0:
+            item['categories'] = ','.join([ ','.join(list(map(lambda x: x['seo']['text'] , x['hierarchy']))) for x in item.get('categories')])
+
+        item['description'] = self.removeHTML(item['description']).strip().capitalize()
         item['name'] = item['name'].capitalize()
         item['brand'] = item['brand'].capitalize()
+        item['package'] = item['package'] if len(re.findall(r"\d", item['package'])) > 0 else 'n/a'
 
         return self.save(item)
 
@@ -43,6 +49,7 @@ class ProductPipeline(object):
                 name=item.get('name'),
                 description=item.get('description'),
                 package=item.get('package'),
+                categories=item.get('categories'),
                 image_urls=item.get('image_urls'))
 
             branch = BranchProduct(
@@ -63,3 +70,6 @@ class ProductPipeline(object):
     def removeHTML(self, text):
         soup = BeautifulSoup(text)
         return soup.get_text()
+
+    def arrayToString(self, item):
+        return ','.join([x for x in item])

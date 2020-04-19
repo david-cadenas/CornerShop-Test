@@ -40,6 +40,7 @@ class WalmartGroceryProductSpider(scrapy.Spider):
                             package=entities['description'],
                             price=offer['currentPrice'],
                             stock=product['quantity'],
+                            categories=product['item']['primaryCategories'],
                             image_urls=entities['images'])
                 yield product
 

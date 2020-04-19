@@ -18,4 +18,5 @@ class Product(scrapy.Item):
     package = scrapy.Field()
     stock = scrapy.Field()
     price = scrapy.Field()
+    categories = scrapy.Field()
     image_urls = scrapy.Field()

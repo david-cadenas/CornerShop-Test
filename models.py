@@ -21,6 +21,7 @@ class Product(Base):
     description = Column(String, nullable=True)
     package = Column(String, nullable=True)
     image_urls = Column(String, nullable=True)
+    categories = Column(String, nullable=True)
 
     branch_products = relationship("BranchProduct", back_populates="product")
 

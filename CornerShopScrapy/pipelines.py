@@ -4,6 +4,7 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
+from bs4 import BeautifulSoup
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import IntegrityError
@@ -21,9 +22,15 @@ class ProductPipeline(object):
     def process_item(self, item, spider):
 
         if item.get('image_urls') and len(list(item.get('image_urls'))) > 0:
-            item['image_urls'] = ','.join(list(map(lambda x: ','.join([x['large']['url'], x['small']['url']]), item.get('image_urls'))))
+            item['image_urls'] = ','.join([ ','.join([x['large']['url'], x['small']['url']]) for x in item.get('image_urls')] )
+
         if item.get('barcodes') and len(list(item.get('barcodes'))) > 0:
-            item['barcodes'] = ','.join(list(map(lambda x: x, item.get('barcodes'))))
+            item['barcodes'] = ','.join([x for x in item.get('barcodes')])
+
+        item['description'] = self.removeHTML(item['description']).strip()
+        item['name'] = item['name'].capitalize()
+        item['brand'] = item['brand'].capitalize()
+
         return self.save(item)
 
     def save(self, item):
@@ -51,3 +58,8 @@ class ProductPipeline(object):
         except IntegrityError:
             self.session.rollback()
             return None
+
+
+    def removeHTML(self, text):
+        soup = BeautifulSoup(text)
+        return soup.get_text()

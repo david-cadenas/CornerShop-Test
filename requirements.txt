@@ -5,3 +5,4 @@ selenium
 zipp
 pickle-mixin
 requests
+beautifulsoup4

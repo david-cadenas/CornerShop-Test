@@ -6,3 +6,4 @@ db.sqlite
 celerybeat-schedule
 geckodriver.log
 *.p
+*.csv

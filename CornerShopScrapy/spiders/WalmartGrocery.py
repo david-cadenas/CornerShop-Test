@@ -26,4 +26,4 @@ class WalmartGrocerySpider(SeleniumSpiderBase):
         self.driver.close()
 
     def closed(self, reason):
-        super(self,reason)
+        super(WalmartGrocerySpider, self).closed(reason)

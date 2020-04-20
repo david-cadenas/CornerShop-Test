@@ -1,6 +1,7 @@
 version: '2.0'
 services:
-  wallmart:
+
+  walmart:
     build: .
     command: python spiders.py
     volumes:
@@ -10,18 +11,19 @@ services:
     env_file:
       - ".env"
     depends_on:
-      - selenium
+      - "selenium"
+
   richard:
     build: .
-      command: [celery, worker, --app=worker.app, --beat, --loglevel=INFO]
+    command: [celery, worker, --app=worker.app, --beat, --loglevel=INFO]
     volumes:
       - .:/app
     links:
-      - selenium
+      - rabbitmq
     env_file:
       - ".env"
     depends_on:
-      - selenium
+      - "rabbitmq"
 
 
   rabbitmq:

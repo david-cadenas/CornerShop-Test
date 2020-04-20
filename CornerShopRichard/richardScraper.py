@@ -2,7 +2,7 @@ import glob
 import os
 import pandas as pd
 import progressbar
-import urllib
+import urllib.request
 import uuid
 import yaml
 
@@ -39,7 +39,7 @@ class RichardScraper(object):
             self.pbar.finish()
 
     def load(self):
-        for key,value in self.config['urls'].iteritems():
+        for key,value in self.config['urls'].items():
             self.getFile(key, value)
             setattr(self, key,pd.read_csv('%s.csv' % key, delimiter="|") )
 
@@ -129,7 +129,7 @@ class RichardScraper(object):
     def getFile(self, name, url):
         print("Getting %s file" % name)
         file_name =  '%s.csv' % (name)
-        urllib.urlretrieve (url, file_name, self.showProgress)
+        urllib.request.urlretrieve (url, file_name, self.showProgress)
         self.pbar = None
 
 

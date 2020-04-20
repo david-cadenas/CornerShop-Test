@@ -16,6 +16,6 @@ def richard(self):
 app.conf.beat_schedule = {
     'wallmart-scrapper': {
         'task': 'tasks.richard',
-        'schedule': crontab(hour='*/1'),
+        'schedule': crontab(hour='1'),
     },
 }

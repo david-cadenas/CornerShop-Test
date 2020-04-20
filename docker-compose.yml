@@ -4,8 +4,6 @@ services:
   walmart:
     build: .
     command: python spiders.py
-    volumes:
-      - .:/app
     links:
       - selenium
     env_file:
@@ -16,8 +14,6 @@ services:
   richard:
     build: .
     command: [celery, worker, --app=worker.app, --beat, --loglevel=INFO]
-    volumes:
-      - .:/app
     links:
       - rabbitmq
     env_file:

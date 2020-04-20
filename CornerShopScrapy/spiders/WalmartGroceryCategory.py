@@ -3,7 +3,6 @@ import os
 import pickle
 import scrapy
 
-from scrapy.utils.project import get_project_settings
 from CornerShopScrapy.spiders.SeleniumSpider import SeleniumSpiderBase
 
 
@@ -13,13 +12,14 @@ class WalmartGroceryCategorySpider(SeleniumSpiderBase):
     def __init__(self,  *args, **kwargs):
         super(WalmartGroceryCategorySpider, self).__init__(*args, **kwargs)
         self.start_urls =  pickle.load( open( "list.p", "rb" ) )
-
-        self.settings=get_project_settings()
         self.links = []
         self.PAGINATE = True
-        self.MAX_NUMBER_OF_PRODUCTS_TOTAL = settings.get('MAX_NUMBER_OF_PRODUCTS_TOTAL')
-        self.MAX_NUMBER_OF_PRODUCTS_PER_PAGE = settings.get('MAX_NUMBER_OF_PRODUCTS_PER_PAGE')
-        self.MAX_PAGE = settings.get('MAX_PAGE')
+        self.MAX_NUMBER_OF_PRODUCTS_TOTAL = os.environ['MAX_NUMBER_OF_PRODUCTS_TOTAL']
+        self.MAX_NUMBER_OF_PRODUCTS_PER_PAGE = os.environ['MAX_NUMBER_OF_PRODUCTS_PER_PAGE']
+        self.MAX_PAGE = os.environ['MAX_PAGE']
+
+        print(self.MAX_PAGE)
+        print(self.settings.keys())
         if os.path.exists("products.p"):
             os.remove("products.p")
 
@@ -48,7 +48,6 @@ class WalmartGroceryCategorySpider(SeleniumSpiderBase):
                 self.links = self.links + current_links[:self.MAX_NUMBER_OF_PRODUCTS_PER_PAGE]
 
     def closed(self, reason):
-        super(WalmartGroceryCategorySpider, self).closed(reason)
         if len(self.links) > 0:
             with open('products.p', 'ab+') as fp:
                 pickle.dump(self.links, fp, protocol=2)

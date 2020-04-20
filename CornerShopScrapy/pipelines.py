@@ -55,7 +55,7 @@ class ProductPipeline(object):
             branch = BranchProduct(
                 branch=item.get('store'),
                 product=product,
-                stock=0,
+                stock=item['stock'],
                 price=float(item.get('price')),
             )
 

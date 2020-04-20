@@ -32,7 +32,7 @@ class WalmartGroceryProductSpider(scrapy.Spider):
             if (int(catchment['storeId']) in self.STORES_IDS):
                 sku = product['activeSkuId']
                 entities = object['entities']['skus'][str(sku)]
-                offer = self.get_offer(id, [sku])
+                offer = self.getOffer(id, [sku])
                 product = Product(store=catchment['storeId'], barcodes=entities['upc'],
                             sku=sku, brand=entities['brand']['name'],
                             name=product['item']['name']['en'],
@@ -44,7 +44,7 @@ class WalmartGroceryProductSpider(scrapy.Spider):
                             image_urls=entities['images'])
                 yield product
 
-    def get_offer(self, id, skuIds):
+    def getOffer(self, id, skuIds):
         r = requests.post('https://www.walmart.ca/api/product-page/price-offer', json={
             "availabilityStoreId": "3124",
             "fsa": "P7B",

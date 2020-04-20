@@ -11,7 +11,7 @@ services:
       - ".env"
     depends_on:
       - selenium
-  scrapper:
+  richard:
     build: .
       command: [celery, worker, --app=worker.app, --beat, --loglevel=INFO]
     volumes:

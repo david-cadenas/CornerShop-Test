@@ -6,3 +6,6 @@ zipp
 pickle-mixin
 requests
 beautifulsoup4
+progressbar2
+pandas
+PyYAML

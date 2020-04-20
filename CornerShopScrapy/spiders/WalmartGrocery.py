@@ -23,7 +23,6 @@ class WalmartGrocerySpider(SeleniumSpiderBase):
         links = list(map(lambda x: x.get_attribute("href"), self.driver.find_elements_by_xpath("//div[contains(@class, 'categoryTile')]/a")))
         if len(links) > 0:
             pickle.dump( links, open( "list.p", "wb" ) )
-        self.driver.close()
 
     def closed(self, reason):
         super(WalmartGrocerySpider, self).closed(reason)

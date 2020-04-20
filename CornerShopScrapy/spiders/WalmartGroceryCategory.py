@@ -14,12 +14,10 @@ class WalmartGroceryCategorySpider(SeleniumSpiderBase):
         self.start_urls =  pickle.load( open( "list.p", "rb" ) )
         self.links = []
         self.PAGINATE = True
-        self.MAX_NUMBER_OF_PRODUCTS_TOTAL = os.environ['MAX_NUMBER_OF_PRODUCTS_TOTAL']
-        self.MAX_NUMBER_OF_PRODUCTS_PER_PAGE = os.environ['MAX_NUMBER_OF_PRODUCTS_PER_PAGE']
-        self.MAX_PAGE = os.environ['MAX_PAGE']
+        self.MAX_NUMBER_OF_PRODUCTS_TOTAL = int(os.environ['MAX_NUMBER_OF_PRODUCTS_TOTAL'])
+        self.MAX_NUMBER_OF_PRODUCTS_PER_PAGE = int(os.environ['MAX_NUMBER_OF_PRODUCTS_PER_PAGE'])
+        self.MAX_PAGE = int(os.environ['MAX_PAGE'])
 
-        print(self.MAX_PAGE)
-        print(self.settings.keys())
         if os.path.exists("products.p"):
             os.remove("products.p")
 

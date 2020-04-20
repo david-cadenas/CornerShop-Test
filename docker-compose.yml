@@ -1,23 +1,34 @@
 version: '2.0'
 services:
-  app:
+  wallmart:
     build: .
     command: python spiders.py
     volumes:
       - .:/app
     links:
-      - rabbitmq
+      - selenium
+    env_file:
+      - ".env"
+    depends_on:
+      - selenium
+  scrapper:
+    build: .
+      command: [celery, worker, --app=worker.app, --beat, --loglevel=INFO]
+    volumes:
+      - .:/app
+    links:
       - selenium
     env_file:
       - ".env"
     depends_on:
       - selenium
 
+
   rabbitmq:
     image: rabbitmq
     ports:
       - "5672:5672"
-      
+
   selenium:
     image: selenium/standalone-firefox
     ports:

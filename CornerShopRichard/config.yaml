@@ -1,0 +1,9 @@
+app:
+  name: "Richart's Wholesale Club"
+  urls:
+    products: https://cornershop-scrapers-evaluation.s3.amazonaws.com/public/PRODUCTS.csv
+    branches: https://cornershop-scrapers-evaluation.s3.amazonaws.com/public/BRANCHES.csv
+    prices: https://cornershop-scrapers-evaluation.s3.amazonaws.com/public/PRICES.csv
+    stock: https://cornershop-scrapers-evaluation.s3.amazonaws.com/public/STOCK.csv
+  branches: ['MM', 'RHSM', 'DMS', 'HRO']
+  max_number_of_items: 2500

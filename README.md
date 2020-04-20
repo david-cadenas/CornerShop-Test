@@ -20,6 +20,9 @@ Although the test asked for the data to be clean, I think the real approach coul
 
 Also, I made this in separate containers in order to look for a micro services architecture that this could be manage as 2 separate services and run as `schedule` task inside the `cloud`
 
+Each scraper has it owns configuration, for `Walmart` the configuration is located inside the `scrapy.cfg` and for `Richard` is inside `CornerShopRichard` folder, the `config.yaml` file
+
+
 ## Spiders
 ### Walmart:
 

@@ -121,7 +121,6 @@ class RichardScraper(object):
             return item
 
         except IntegrityError as e:
-            print(str(e))
             self.session.rollback()
             return None
 
